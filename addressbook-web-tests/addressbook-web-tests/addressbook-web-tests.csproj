@@ -155,10 +155,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountData.cs" />
+    <Compile Include="ContactHelper.cs" />
+    <Compile Include="GroupHelper.cs" />
+    <Compile Include="HelperBase.cs" />
+    <Compile Include="NavigationHelper.cs" />
+    <Compile Include="TestBase.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="ContactData.cs" />
     <Compile Include="Figure.cs" />
     <Compile Include="GroupData.cs" />
+    <Compile Include="GroupRemoval.cs" />
+    <Compile Include="LoginHelper.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

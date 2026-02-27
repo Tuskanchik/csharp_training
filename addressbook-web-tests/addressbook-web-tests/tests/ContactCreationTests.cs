@@ -17,7 +17,6 @@ namespace WebAddressbookTests
 
             app.Contacts.Create(contact);
             app.Navigator.GoToHomePage();
-            app.Auth.Logout();
         }
 
         [Test]
@@ -27,7 +26,6 @@ namespace WebAddressbookTests
 
             app.Contacts.Create(contact);
             app.Navigator.GoToHomePage();
-            app.Auth.Logout();
         }
 
         [Test]
@@ -39,7 +37,6 @@ namespace WebAddressbookTests
 
             app.Contacts.Create(contact);
             app.Navigator.GoToHomePage();
-            app.Auth.Logout();
         }
     }
 }

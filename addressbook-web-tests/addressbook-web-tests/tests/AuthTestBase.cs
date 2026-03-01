@@ -1,29 +1,23 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
-    [SetUpFixture]
-    public class TestSuitefixture
+    public class AuthTestBase : TestBase
     {
-
-        ApplicationManager app = ApplicationManager.GetInstance();
-
         [SetUp]
-        public void InitApplicationManager()
+        public void SetupLogin()
         {
-            app.Navigator.GoToHomePage();
+            app = ApplicationManager.GetInstance();
             app.Auth.Login(new AccountData("admin", "secret"));
         }
-
         [TearDown]
-        public void StopApplicationManager()
+        public void TeardownTest()
         {
-            
             app.Auth.Logout();
         }
     }

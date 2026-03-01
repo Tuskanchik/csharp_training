@@ -1,11 +1,12 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
@@ -20,15 +21,29 @@ namespace WebAddressbookTests
         }
         public void GoToHomePage()
         {
+            if (driver.Url == baseURL + "/addressbook/")
+            {
+                return;
+            }
             driver.Navigate().GoToUrl(baseURL + "/addressbook/");
         }
         public void GoToGroupsPage()
         {
-            driver.FindElement(By.LinkText("groups")).Click();
+            if (driver.Url == baseURL + "/addressbook/group.php" && IsElementPresent(By.Name("new")))
+            {
+                return;
+            }
+            {
+                driver.FindElement(By.LinkText("groups")).Click();
+            }
         }
         public void GoToAddNewPage()
         {
-            driver.FindElement(By.LinkText("add new")).Click();
+            if (driver.Url == baseURL + "/addressbook/edit.php" && IsElementPresent(By.Name("submit")))
+            {
+                return;
+            }
+                driver.FindElement(By.LinkText("add new")).Click();
         }
     }
 }

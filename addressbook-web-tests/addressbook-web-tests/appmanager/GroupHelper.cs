@@ -31,6 +31,7 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
+            CheckGroupsListIsNotEmpty();
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -38,6 +39,7 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
             return this;
         }
+
         public GroupHelper InitGroupModification()
         {
             driver.FindElement(By.Name("edit")).Click();
@@ -48,10 +50,10 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("update")).Click();
             return this;
         }
-
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupsPage();
+            CheckGroupsListIsNotEmpty();
             SelectGroup(v);
             DeleteSelectedGroups();
             ReturnToGroupsPage();
@@ -62,7 +64,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("new")).Click();
             return this;
         }
-
         public GroupHelper FillGroupForm(GroupData group)
         {
             Type(By.Name("group_name"), group.Name);
@@ -70,20 +71,16 @@ namespace WebAddressbookTests
             Type(By.Name("group_footer"), group.Footer);
             return this;
         }
-
-
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
             return this;
         }
-
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
             return this;
         }
-
         public GroupHelper DeleteSelectedGroups()
         {
             driver.FindElement(By.Name("delete")).Click();
@@ -93,6 +90,21 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.LinkText("group page")).Click();
             return this;
+        }
+        public GroupHelper CheckGroupsListIsNotEmpty()
+        {
+            if (IsElementPresent(By.Name("selected[]")))
+            {
+                return this;
+            }
+            else
+            {
+                GroupData group = new GroupData("fff");
+                group.Header = "bbb";
+                group.Footer = "ccc";
+                Create(group);
+                return this;
+            }
         }
     }
 }

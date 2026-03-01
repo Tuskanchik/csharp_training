@@ -34,7 +34,7 @@ namespace WebAddressbookTests
             contactHelper = new ContactHelper(this);
         }
 
-        public ~ApplicationManager()
+        ~ApplicationManager()
         {
             try
             {

@@ -31,6 +31,7 @@ namespace WebAddressbookTests
             InitContactModification(v);
             FillContactForm(newData);
             SubmitContactModification();
+            ReturnToHomePage();
             return this;
         }
 
@@ -70,12 +71,8 @@ namespace WebAddressbookTests
 
         public void FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+            Type(By.Name("firstname"), contact.FirstName);
+            Type(By.Name("lastname"), contact.LastName);
         }
         public void SubmitContactCreation()
         {

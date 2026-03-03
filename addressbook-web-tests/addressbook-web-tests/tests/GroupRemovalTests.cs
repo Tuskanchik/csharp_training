@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium.BiDi.BrowsingContext;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;

@@ -31,7 +31,6 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            CheckGroupsListIsNotEmpty();
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -53,7 +52,6 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupsPage();
-            CheckGroupsListIsNotEmpty();
             SelectGroup(v);
             DeleteSelectedGroups();
             ReturnToGroupsPage();
@@ -91,20 +89,22 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("group page")).Click();
             return this;
         }
-        public GroupHelper CheckGroupsListIsNotEmpty()
+        public bool CheckGroupsListIsNotEmpty()
         {
-            if (IsElementPresent(By.Name("selected[]")))
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
+        public GroupHelper CreateGroupIfGroupsListIsEmpty()
+        {
+            if (CheckGroupsListIsNotEmpty() == false)
             {
-                return this;
+                GroupData groupData = new GroupData("qqq");
+                groupData.Header = "www";
+                groupData.Footer = "eee";
+
+                Create(groupData);
             }
-            else
-            {
-                GroupData group = new GroupData("fff");
-                group.Header = "bbb";
-                group.Footer = "ccc";
-                Create(group);
-                return this;
-            }
+            return this;
         }
     }
 }

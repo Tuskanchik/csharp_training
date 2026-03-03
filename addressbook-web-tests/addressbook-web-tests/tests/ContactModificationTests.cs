@@ -14,6 +14,8 @@ namespace WebAddressbookTests
 
         public void ContactModificationTest()
         {
+            app.Contacts.CreateContactIfContactsListIsEmpty();
+            
             ContactData newData = new ContactData("", "");
             newData.FirstName = "Irina";
             newData.LastName = "Novikova";

@@ -22,13 +22,13 @@ namespace WebAddressbookTests
             manager.Navigator.GoToAddNewPage();
             FillContactForm(contact);
             SubmitContactCreation();
+            ReturnToHomePage();
 
             return this;
         }
 
         public ContactHelper Modify(int v, ContactData newData)
         {
-            CheckContactsListIsNotEmpty();
             InitContactModification(v);
             FillContactForm(newData);
             SubmitContactModification();
@@ -40,7 +40,6 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int v)
         {
-            CheckContactsListIsNotEmpty();
             SelectContact(v);
             InitContactRemoval();
             ReturnToHomePage();
@@ -86,19 +85,19 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("home page")).Click();
             return this;
         }
-        public ContactHelper CheckContactsListIsNotEmpty()
+        public bool CheckContactsListIsNotEmpty()
         {
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                return this;
-            }
-            else
+            return IsElementPresent(By.Name("selected[]"));                          
+        }
+
+        public ContactHelper CreateContactIfContactsListIsEmpty()
+        {
+            if (CheckContactsListIsNotEmpty() == false)
             {
                 ContactData contact = new ContactData("", "");
                 Create(contact);
-                manager.Navigator.GoToHomePage();
-                return this;
             }
+            return this;
         }
     }
 }

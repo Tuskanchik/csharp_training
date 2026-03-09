@@ -16,11 +16,20 @@ namespace WebAddressbookTests
         {
             app.Contacts.CreateContactIfContactsListIsEmpty();
             
-            ContactData newData = new ContactData("", "");
-            newData.FirstName = "Irina";
-            newData.LastName = "Novikova";
+            ContactData contact = new ContactData("", "");
+            contact.FirstName = "Irina";
+            contact.LastName = "Novikova";
 
-            app.Contacts.Modify(1, newData);
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
+            app.Contacts.Modify(0, contact);
+
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            oldContacts[0].FirstName = contact.FirstName;
+            oldContacts[0].LastName = contact.LastName;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

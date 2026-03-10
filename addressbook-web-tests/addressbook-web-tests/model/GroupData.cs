@@ -38,7 +38,7 @@ namespace WebAddressbookTests
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode(); 
+            return Name.GetHashCode();
         }
 
         public override string ToString()
@@ -48,9 +48,9 @@ namespace WebAddressbookTests
 
         public int CompareTo(GroupData other)
         {
-            if (Object.ReferenceEquals (other, null))
+            if (Object.ReferenceEquals(other, null))
             {
-                return 1; 
+                return 1;
             }
             return Name.CompareTo(other.Name);
         }
@@ -67,28 +67,11 @@ namespace WebAddressbookTests
             }
         }
 
-        public string Header
-        {
-            get
-            {
-                return header;
-            }
-            set
-            {
-                header = value;
-            }
-        }
-
-        public string Footer
-        {
-            get
-            {
-                return footer;
-            }
-            set
-            {
-                footer = value;
-            }
-        }
+        //public string Name { get; set; }
+        //при таком написании геттера и сеттера тесты падают
+        //если я правильно понял, метод CompareTo возвращает null
+        public string Header { get; set; }
+        public string Footer { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace WebAddressbookTests
     {
         private string firstname;
         private string lastname;
-
         public ContactData (string firstname, string lastname)
         {
             this.firstname = firstname;
@@ -81,5 +80,7 @@ namespace WebAddressbookTests
                 return fullname;
             }
         }
+
+        public string Id { get; set; }
     }
 }

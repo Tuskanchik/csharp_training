@@ -43,6 +43,7 @@ namespace WebAddressbookTests
             SelectContact(v);
             InitContactRemoval();
             ReturnToHomePage();
+            contactCache = null;
             return this;
         }
 
@@ -68,6 +69,7 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -79,6 +81,7 @@ namespace WebAddressbookTests
         public void SubmitContactCreation()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[19]")).Click();
+            contactCache = null;
         }
         public ContactHelper ReturnToHomePage()
         {
@@ -100,21 +103,48 @@ namespace WebAddressbookTests
             return this;
         }
 
+        private List<ContactData> contactCache = null;
+
+        public int GetContactsCount()
+        {
+            return driver.FindElements(By.Name("entry")).Count;
+        }
+
         internal List<ContactData> GetContactsList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> rows = driver.FindElements(By.Name("entry"));
-            foreach (IWebElement row in rows)
-            {
-                IList<IWebElement> cells = row.FindElements(By.TagName("td"));
+            if (contactCache == null) {
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> rows = driver.FindElements(By.Name("entry"));
+                foreach (IWebElement row in rows)
+                {
+                    IList<IWebElement> cells = row.FindElements(By.TagName("td"));
 
-                string lastName = cells[1].Text;
-                string firstName = cells[2].Text;
+                    string lastName = cells[1].Text;
+                    string firstName = cells[2].Text;
 
-                contacts.Add(new ContactData(firstName, lastName));
+                    contactCache.Add(new ContactData(firstName, lastName) {
+                        Id = cells[0].FindElement(By.TagName("input")).GetAttribute("id")
+                    });
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCache);
+
+
+            //List<ContactData> contacts = new List<ContactData>();
+            //manager.Navigator.GoToHomePage();
+            //ICollection<IWebElement> rows = driver.FindElements(By.Name("entry"));
+            //foreach (IWebElement row in rows)
+            //{
+            //    IList<IWebElement> cells = row.FindElements(By.TagName("td"));
+
+            //    string lastName = cells[1].Text;
+            //    string firstName = cells[2].Text;
+
+            //    contacts.Add(new ContactData(firstName, lastName));
+            //}
+            //return contacts;
+
         }
     }
 }

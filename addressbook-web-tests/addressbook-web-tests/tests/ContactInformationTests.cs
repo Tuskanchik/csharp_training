@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace WebAddressbookTests
     public class ContactInformationTests : AuthTestBase
     {
         [Test]
-        public void TestContactInformation()
+        public void TestContactInformationTableAndEditForm()
         {
             ContactData fromTable = app.Contacts.GetContactInformationFromTable(0);
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
@@ -20,5 +21,21 @@ namespace WebAddressbookTests
             Assert.AreEqual(fromTable.Address, fromForm.Address);
             Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
         }
+
+
+        [Test]
+        public void TestContactInformationViewFormAndEditForm()
+        {
+            //ContactData fromTable = app.Contacts.GetContactInformationFromTable(0);
+            ContactData fromEditForm = app.Contacts.GetContactInformationFromEditForm(0);
+            string editFormDataModyfyed = app.Contacts.ProvideContactInformationInViewModeStyle(fromEditForm);
+            string fromViewForm = app.Contacts.GetContactInformationFromViewForm(0);
+            Console.WriteLine(editFormDataModyfyed);
+
+            //Assert.AreEqual(editFormDataModyfyed, fromViewForm);
+            //Assert.AreEqual(fromTable.Address, fromForm.Address);
+            //Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
+        }
+
     }
 }

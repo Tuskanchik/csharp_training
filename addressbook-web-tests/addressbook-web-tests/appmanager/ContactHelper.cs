@@ -1,13 +1,14 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebAddressbookTests;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
-using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -78,6 +79,10 @@ namespace WebAddressbookTests
         {
             Type(By.Name("firstname"), contact.FirstName);
             Type(By.Name("lastname"), contact.LastName);
+            Type(By.Name("address"), contact.Address);
+            Type(By.Name("home"), contact.HomePhone);
+            Type(By.Name("mobile"), contact.MobilePhone);
+            Type(By.Name("work"), contact.WorkPhone);
         }
         public void SubmitContactCreation()
         {
@@ -190,6 +195,37 @@ namespace WebAddressbookTests
             string text = driver.FindElement(By.TagName("label")).Text;
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
+        }
+
+        public string GetContactInformationFromViewForm(int index)
+        {   
+            manager.Navigator.GoToHomePage();
+            OpenContactViewMode(index);
+            string content = driver.FindElement(By.Id("content")).Text;
+            return content;
+        }
+
+        public void OpenContactViewMode(int index)
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index + 2) + "]/td[7]/a/img")).Click();
+        }
+
+        public string ProvideContactInformationInViewModeStyle(ContactData contact)
+        {
+            string dataInViewModeStyle = System.String.Format(@"{0} {1} {2}
+{3}
+
+H: {4}
+M: {5}
+W: {6}", 
+contact.FirstName, 
+contact.MiddleName, 
+contact.LastName, 
+contact.Address, 
+contact.HomePhone, 
+contact.MobilePhone, 
+contact.WorkPhone);
+            return dataInViewModeStyle.Replace("  ", " ");
         }
     }
 }

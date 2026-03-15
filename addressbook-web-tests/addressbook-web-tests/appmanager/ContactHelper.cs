@@ -227,5 +227,7 @@ contact.MobilePhone,
 contact.WorkPhone);
             return dataInViewModeStyle.Replace("  ", " ");
         }
+
+
     }
 }

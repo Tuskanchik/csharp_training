@@ -26,15 +26,12 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactInformationViewFormAndEditForm()
         {
-            //ContactData fromTable = app.Contacts.GetContactInformationFromTable(0);
             ContactData fromEditForm = app.Contacts.GetContactInformationFromEditForm(0);
             string editFormDataModyfyed = app.Contacts.ProvideContactInformationInViewModeStyle(fromEditForm);
             string fromViewForm = app.Contacts.GetContactInformationFromViewForm(0);
             Console.WriteLine(editFormDataModyfyed);
 
-            //Assert.AreEqual(editFormDataModyfyed, fromViewForm);
-            //Assert.AreEqual(fromTable.Address, fromForm.Address);
-            //Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
+            Assert.AreEqual(editFormDataModyfyed, fromViewForm);
         }
 
     }

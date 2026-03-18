@@ -14,11 +14,11 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(ApplicationManager manager) 
-            : base(manager) 
-        { 
+        public ContactHelper(ApplicationManager manager)
+            : base(manager)
+        {
         }
-        
+
         public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.GoToAddNewPage();
@@ -96,7 +96,7 @@ namespace WebAddressbookTests
         }
         public bool CheckContactsListIsNotEmpty()
         {
-            return IsElementPresent(By.Name("selected[]"));                          
+            return IsElementPresent(By.Name("selected[]"));
         }
 
         public ContactHelper CreateContactIfContactsListIsEmpty()
@@ -118,7 +118,8 @@ namespace WebAddressbookTests
 
         internal List<ContactData> GetContactsList()
         {
-            if (contactCache == null) {
+            if (contactCache == null)
+            {
                 contactCache = new List<ContactData>();
                 manager.Navigator.GoToHomePage();
                 ICollection<IWebElement> rows = driver.FindElements(By.Name("entry"));
@@ -129,7 +130,8 @@ namespace WebAddressbookTests
                     string lastName = cells[1].Text;
                     string firstName = cells[2].Text;
 
-                    contactCache.Add(new ContactData(firstName, lastName) {
+                    contactCache.Add(new ContactData(firstName, lastName)
+                    {
                         Id = cells[0].FindElement(By.TagName("input")).GetAttribute("id")
                     });
                 }
@@ -174,6 +176,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             InitContactModification(index);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
@@ -182,6 +185,7 @@ namespace WebAddressbookTests
 
             return new ContactData(firstName, lastName)
             {
+                MiddleName = middleName,
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
@@ -198,7 +202,7 @@ namespace WebAddressbookTests
         }
 
         public string GetContactInformationFromViewForm(int index)
-        {   
+        {
             manager.Navigator.GoToHomePage();
             OpenContactViewMode(index);
             string content = driver.FindElement(By.Id("content")).Text;
@@ -212,22 +216,64 @@ namespace WebAddressbookTests
 
         public string ProvideContactInformationInViewModeStyle(ContactData contact)
         {
-            string dataInViewModeStyle = System.String.Format(@"{0} {1} {2}
-{3}
+            string dataInViewModeStyle = "";
 
-H: {4}
-M: {5}
-W: {6}", 
-contact.FirstName, 
-contact.MiddleName, 
-contact.LastName, 
-contact.Address, 
-contact.HomePhone, 
-contact.MobilePhone, 
-contact.WorkPhone);
-            return dataInViewModeStyle.Replace("  ", " ");
+            string fullName = (contact.FirstName + " " + contact.MiddleName + " " + contact.LastName);
+            fullName = fullName.Replace("  ", " ");
+            fullName = fullName.Trim();
+            if (fullName != "")
+            {
+                dataInViewModeStyle += fullName;
+            }
+
+            if (contact.Address != "" && dataInViewModeStyle != "")
+            {
+                dataInViewModeStyle += "\r\n" + contact.Address;
+            }
+
+            if (contact.Address != "")
+            {
+                dataInViewModeStyle += contact.Address;
+            }
+
+            string phones = "";
+            if (contact.HomePhone != "")
+            {
+                phones += "H: " + contact.HomePhone;
+            }
+
+            if (phones != "" && contact.MobilePhone != "")
+            {
+                phones += "\r\n";
+            }
+
+            if (contact.MobilePhone != "")
+            {
+                phones += "M: " + contact.MobilePhone;
+            }
+
+            if (phones != "" && contact.WorkPhone != "")
+            {
+                phones += "\r\n";
+            }
+
+            if (contact.WorkPhone != "")
+            {
+                phones += "W: " + contact.WorkPhone;
+            }
+
+            if (dataInViewModeStyle != "" && phones != "")
+            {
+                dataInViewModeStyle += "\r\n\r\n";
+            }
+
+            if (phones != "")
+            {
+                dataInViewModeStyle += phones;
+            }
+
+            return dataInViewModeStyle;
         }
-
-
     }
 }
+

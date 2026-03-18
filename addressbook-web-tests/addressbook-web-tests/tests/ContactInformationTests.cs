@@ -29,7 +29,8 @@ namespace WebAddressbookTests
             ContactData fromEditForm = app.Contacts.GetContactInformationFromEditForm(0);
             string editFormDataModyfyed = app.Contacts.ProvideContactInformationInViewModeStyle(fromEditForm);
             string fromViewForm = app.Contacts.GetContactInformationFromViewForm(0);
-            Console.WriteLine(editFormDataModyfyed);
+            //Console.WriteLine(editFormDataModyfyed);
+            //Console.WriteLine(fromViewForm);
 
             Assert.AreEqual(editFormDataModyfyed, fromViewForm);
         }

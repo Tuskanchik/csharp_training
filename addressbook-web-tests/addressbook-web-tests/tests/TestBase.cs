@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
@@ -33,6 +34,9 @@ namespace WebAddressbookTests
             {
                 builder.Append(Convert.ToChar(32 + Convert.ToInt32(rnd.NextDouble() * 223)));
             }
+            //string a = builder.ToString();
+            //string b = Regex.Replace(a, "`", "");
+            //return b;
             return builder.ToString();
         }
 

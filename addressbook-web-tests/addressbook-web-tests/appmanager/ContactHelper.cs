@@ -231,7 +231,7 @@ namespace WebAddressbookTests
                 dataInViewModeStyle += "\r\n" + contact.Address;
             }
 
-            if (contact.Address != "")
+            if (contact.Address != "" && dataInViewModeStyle == "")
             {
                 dataInViewModeStyle += contact.Address;
             }

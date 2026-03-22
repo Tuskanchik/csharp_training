@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfContactData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContactData>
+    <FirstName>3Q@*.!*</FirstName>
+    <MiddleName>$</MiddleName>
+    <LastName>K37_'!</LastName>
+    <Address>AE,K'Q%X</Address>
+    <HomePhone>8 (928) 541 96 42</HomePhone>
+    <MobilePhone>8 (987) 798 66 76</MobilePhone>
+    <WorkPhone>8 (973) 936 20 57</WorkPhone>
+    <AllPhones>89285419642
+89877986676
+89739362057</AllPhones>
+  </ContactData>
+  <ContactData>
+    <FirstName>ARY_</FirstName>
+    <MiddleName>%</MiddleName>
+    <LastName>_M</LastName>
+    <Address>)+9", ;2</Address>
+    <HomePhone>+7-901-8791076</HomePhone>
+    <MobilePhone>+7 933 316 57 86</MobilePhone>
+    <WorkPhone>+7 931 216 67 99</WorkPhone>
+    <AllPhones>+7-901-8791076
++79333165786
++79312166799</AllPhones>
+  </ContactData>
+  <ContactData>
+    <FirstName>*7Y(JZ%A</FirstName>
+    <MiddleName>V,0XJ</MiddleName>
+    <LastName>M*5F5&amp;P</LastName>
+    <Address>X&amp;./]T</Address>
+    <HomePhone>+79888452136</HomePhone>
+    <MobilePhone>+79942252217</MobilePhone>
+    <WorkPhone>+79442441226</WorkPhone>
+    <AllPhones>+79888452136
++79942252217
++79442441226</AllPhones>
+  </ContactData>
+  <ContactData>
+    <FirstName>D;;KFHUTW</FirstName>
+    <MiddleName />
+    <LastName>@R!!&lt;K)MOD</LastName>
+    <Address>!=</Address>
+    <HomePhone>+7 907 848 51 16</HomePhone>
+    <MobilePhone>+79266412927</MobilePhone>
+    <WorkPhone>+7 954 817 84 35</WorkPhone>
+    <AllPhones>+79078485116
++79266412927
++79548178435</AllPhones>
+  </ContactData>
+</ArrayOfContactData>

@@ -11,12 +11,15 @@ namespace WebAddressbookTests
     {
         private string allPhones;
 
+
         public ContactData (string firstname, string lastname)
         {
             FirstName = firstname;
             LastName = lastname;
         }
-
+        //public ContactData (string firstname, string lastname)
+        //{
+        //}
         public bool Equals(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))

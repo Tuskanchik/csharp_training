@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfGroupData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GroupData>
+    <Name>EK</Name>
+    <Header>`A</Header>
+    <Footer>#/3&amp;Y7</Footer>
+  </GroupData>
+  <GroupData>
+    <Name>TTT</Name>
+    <Header>7'</Header>
+    <Footer>CAJ</Footer>
+  </GroupData>
+</ArrayOfGroupData>

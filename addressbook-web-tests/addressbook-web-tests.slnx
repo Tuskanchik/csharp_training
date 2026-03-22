@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="addressbook-test-data-generators/addressbook-test-data-generators.csproj" Id="0cfe1657-5880-4ea9-a5f3-701d7efa972a">
+    <BuildDependency Project="addressbook-web-tests/addressbook-web-tests.csproj" />
+  </Project>
   <Project Path="addressbook-web-tests/addressbook-web-tests.csproj" Id="ca2dccdd-47a5-4da1-b0b3-6db201ac67f3" />
 </Solution>

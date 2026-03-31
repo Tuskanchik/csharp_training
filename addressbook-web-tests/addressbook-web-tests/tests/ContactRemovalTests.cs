@@ -9,7 +9,7 @@ using WebAddressbookTests;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
         [Test]
 
@@ -17,13 +17,14 @@ namespace WebAddressbookTests
         {
             app.Contacts.CreateContactIfContactsListIsEmpty();
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            //List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            List<ContactData> oldContacts = ContactData.GetAll();
             ContactData toBeRemoved = oldContacts[0];
-            app.Contacts.Remove(0);
+            app.Contacts.Remove(toBeRemoved);
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactsCount());
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.RemoveAt(0);
             oldContacts.Sort();
             newContacts.Sort();

@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using NUnit.Framework;
+using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -27,18 +29,24 @@ namespace WebAddressbookTests
             return contacts;
         }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+                File.ReadAllText(@"contacts.json"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void ContactModificationTest(ContactData contact)
         {
             app.Contacts.CreateContactIfContactsListIsEmpty();
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            List<ContactData> oldContacts = ContactData.GetAll();
             ContactData oldData = oldContacts[0];
 
-            app.Contacts.Modify(0, contact);
+            app.Contacts.Modify(oldData, contact);
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactsCount());
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts[0].FirstName = contact.FirstName;
             oldContacts[0].LastName = contact.LastName;
             oldContacts.Sort();

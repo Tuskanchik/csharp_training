@@ -11,6 +11,7 @@ namespace WebAddressbookTests
 {
     public class TestBase
     {
+        public bool PERFORM_LONG_UI_CHECKS = true;
         protected ApplicationManager app;
         
         [SetUp]

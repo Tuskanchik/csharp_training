@@ -39,6 +39,17 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public GroupHelper Modify(GroupData oldData, GroupData newData)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(oldData.Id);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
         public GroupHelper InitGroupModification()
         {
             driver.FindElement(By.Name("edit")).Click();
@@ -54,6 +65,16 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToGroupsPage();
             SelectGroup(v);
+            DeleteSelectedGroups();
+            ReturnToGroupsPage();
+            groupCache = null;
+            return this;
+        }
+
+        public GroupHelper Remove(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(group.Id);
             DeleteSelectedGroups();
             ReturnToGroupsPage();
             groupCache = null;
@@ -80,6 +101,12 @@ namespace WebAddressbookTests
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + (index + 1)+ "]/input")).Click();
+            return this;
+        }
+
+        public GroupHelper SelectGroup(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             return this;
         }
         public GroupHelper DeleteSelectedGroups()
@@ -121,7 +148,7 @@ namespace WebAddressbookTests
                 foreach (IWebElement element in elements)
                 {
                     groupCache.Add(new GroupData(element.Text) {
-                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value"),
                     });
 
                     //GroupData group = new GroupData(element.Text) {

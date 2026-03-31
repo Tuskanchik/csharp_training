@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -51,14 +51,14 @@ namespace WebAddressbookTests
         {
             //ContactData contact = new ContactData("Irina", "Bashmakova");
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
-            
+            List<ContactData> oldContacts = ContactData.GetAll();
+
             app.Contacts.Create(contact);
             app.Navigator.GoToHomePage();
 
             Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactsCount());
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();
@@ -106,27 +106,41 @@ namespace WebAddressbookTests
         //    Assert.AreEqual(oldContacts, newContacts);
         //}
 
+        //[Test]
+        //public void CloneContactTest()
+        //{
+        //    //ContactData contact = new ContactData("", "");
+        //    //contact.FirstName = "2";
+        //    //contact.LastName = "3";
+        //    ContactData contact = app.Contacts.GetContactInformationFromEditForm(0);
+
+
+        //    List<ContactData> oldContacts = ContactData.getAll();
+
+        //    app.Contacts.Create(contact);
+        //    app.Navigator.GoToHomePage();
+
+        //    Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactsCount());
+
+        //    List<ContactData> newContacts = ContactData.getAll();
+        //    oldContacts.Add(contact);
+        //    oldContacts.Sort();
+        //    newContacts.Sort();
+        //    Assert.AreEqual(oldContacts, newContacts);
+        //}
+
         [Test]
-        public void CloneContactTest()
+        public void TestDBConnectivity()
         {
-            //ContactData contact = new ContactData("", "");
-            //contact.FirstName = "2";
-            //contact.LastName = "3";
-            ContactData contact = app.Contacts.GetContactInformationFromEditForm(0);
+            DateTime start = DateTime.Now;
+            List<ContactData> fromUi = app.Contacts.GetContactsList();
+            DateTime end = DateTime.Now;
+            Console.Write(end.Subtract(start));
 
-
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
-
-            app.Contacts.Create(contact);
-            app.Navigator.GoToHomePage();
-
-            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactsCount());
-
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
-            oldContacts.Add(contact);
-            oldContacts.Sort();
-            newContacts.Sort();
-            Assert.AreEqual(oldContacts, newContacts);
+            start = DateTime.Now;
+            List<ContactData> fromDb = ContactData.GetAll();
+            end = DateTime.Now;
+            Console.Write(end.Subtract(start));
         }
     }
 }

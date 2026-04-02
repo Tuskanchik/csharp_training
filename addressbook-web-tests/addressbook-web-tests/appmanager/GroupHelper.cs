@@ -180,5 +180,20 @@ namespace WebAddressbookTests
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
+
+        public GroupData GetNotEmptyGroup()
+        {
+            List<GroupData> groups = GroupData.GetAll();
+            GroupData group = null;
+            foreach (GroupData g in groups)
+            {
+                if (g.GetContacts().Count > 0)
+                {
+                    group = g;
+                    break;
+                }
+            }
+            return group;
+        }
     }
 }

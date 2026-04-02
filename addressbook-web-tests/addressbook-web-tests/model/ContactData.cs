@@ -85,6 +85,10 @@ namespace WebAddressbookTests
         
         [Column(Name = "work")]
         public string WorkPhone { get; set; }
+
+
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
         public string AllPhones
         {
             get

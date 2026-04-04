@@ -129,15 +129,16 @@ namespace WebAddressbookTests
         }
         public bool CheckContactsListIsNotEmpty()
         {
-            return IsElementPresent(By.Name("selected[]"));
+            //return IsElementPresent(By.Name("selected[]"));
+            return ContactData.GetAll().Count > 0;
         }
 
         public ContactHelper CreateContactIfContactsListIsEmpty()
         {
-            if (CheckContactsListIsNotEmpty() == false)
+            if (manager.Contacts.CheckContactsListIsNotEmpty() == false)
             {
-                ContactData contact = new ContactData("", "");
-                Create(contact);
+                ContactData contact = new ContactData("Novikov", "Igor");
+                manager.Contacts.Create(contact);
             }
             return this;
         }
@@ -319,6 +320,13 @@ namespace WebAddressbookTests
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
+        public void AddFistContactToFirstGroup()
+        {
+            GroupData group = GroupData.GetAll()[0];
+            ContactData contact = ContactData.GetAll().Except(group.GetContacts()).First();
+            AddContactToGroup(contact, group);
+        }
+
         private void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
@@ -351,6 +359,8 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("remove")).Click();
         }
+
+
     }
 }
 

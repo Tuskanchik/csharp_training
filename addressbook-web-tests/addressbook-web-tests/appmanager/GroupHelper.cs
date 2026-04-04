@@ -121,9 +121,24 @@ namespace WebAddressbookTests
         }
         public bool CheckGroupsListIsNotEmpty()
         {
-            return IsElementPresent(By.Name("selected[]"));
+            //return IsElementPresent(By.Name("selected[]"));
+            return GroupData.GetAll().Count > 0;
         }
 
+        private bool CheckForAGroupWithAddedUsers()
+        {
+            List<GroupData> groups = GroupData.GetAll();
+            bool SomeGroupExistContacts = false;
+            foreach (GroupData group in groups)
+            {
+                if (group.GetContacts().Count > 0)
+                {
+                    SomeGroupExistContacts = true;
+                    break;
+                }
+            }
+            return SomeGroupExistContacts;
+        }
         public GroupHelper CreateGroupIfGroupsListIsEmpty()
         {
             if (CheckGroupsListIsNotEmpty() == false)
@@ -135,6 +150,69 @@ namespace WebAddressbookTests
                 Create(groupData);
             }
             return this;
+        }
+
+        private void AddContactToGroupIfNoOneGroupHaveContacts()
+        {
+            if (CheckForAGroupWithAddedUsers() == false)
+            {
+                manager.Contacts.AddFistContactToFirstGroup();
+            }
+        }
+        public GroupData GetNotEmptyGroup()
+        {
+            manager.Contacts.CreateContactIfContactsListIsEmpty();
+            CreateGroupIfGroupsListIsEmpty();
+            AddContactToGroupIfNoOneGroupHaveContacts();
+
+            List<GroupData> groups = GroupData.GetAll();
+            GroupData group = null;
+            foreach (GroupData g in groups)
+            {
+                if (g.GetContacts().Count > 0)
+                {
+                    group = g;
+                    break;
+                }
+            }
+            return group;
+        }
+        public GroupData GetGroupThatDoesntHaveAllContacts()
+        {
+            manager.Contacts.CreateContactIfContactsListIsEmpty();
+            CreateGroupIfGroupsListIsEmpty();
+            CreateGroupIfAllGroupsHaveAllContacts();
+            GroupData group = null;
+            List<GroupData> groups = GroupData.GetAll();
+            int usersCount = ContactData.GetAll().Count();
+            foreach (GroupData g in groups)
+            {
+                if (g.GetContacts().Count() < usersCount)
+                {
+                    group = g;
+                    break;
+                }
+            }
+            return group;
+        }
+
+        private void CreateGroupIfAllGroupsHaveAllContacts()
+        {
+            GroupData group = null;
+            List<GroupData> groups = GroupData.GetAll();
+            int usersCount = ContactData.GetAll().Count();
+            foreach (GroupData g in groups)
+            {
+                if (g.GetContacts().Count() < usersCount)
+                {
+                    group = g;
+                    break;
+                }
+            }
+            if (group == null)
+            {
+                Create(new GroupData("Default Group"));
+            }
         }
 
         private List<GroupData> groupCache = null;
@@ -181,19 +259,8 @@ namespace WebAddressbookTests
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
 
-        public GroupData GetNotEmptyGroup()
-        {
-            List<GroupData> groups = GroupData.GetAll();
-            GroupData group = null;
-            foreach (GroupData g in groups)
-            {
-                if (g.GetContacts().Count > 0)
-                {
-                    group = g;
-                    break;
-                }
-            }
-            return group;
-        }
+
+
+
     }
 }

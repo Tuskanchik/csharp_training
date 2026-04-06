@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebAddressbookTests;
+using static LinqToDB.Sql;
 
 namespace WebAddressbookTests
 {
@@ -314,7 +315,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             ClearGroupFilter();
             SelectContact(contact.Id);
-            SelectGroupToAdd(group.Name);
+            SelectGroupToAdd(group.Id);
             CommitAddingContactToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
@@ -332,9 +333,9 @@ namespace WebAddressbookTests
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
 
-        private void SelectGroupToAdd(string name)
+        private void SelectGroupToAdd(string groupId)
         {
-            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+            driver.FindElement(By.CssSelector("select[name='to_group'] option[value='" + groupId + "']")).Click();
         }
 
         private void CommitAddingContactToGroup()
@@ -345,14 +346,14 @@ namespace WebAddressbookTests
         internal void RemoveContactFromGroup(ContactData contact, GroupData group)
         {
             manager.Navigator.GoToHomePage();
-            FilterContactListByGroupName(group.Name);
+            FilterContactListByGroupName(group.Id);
             SelectContact(contact.Id);
             CommitRemovalContactFromGroup();   
         }
 
-        private void FilterContactListByGroupName(string groupName)
+        private void FilterContactListByGroupName(string groupId)
         {
-            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(groupName);
+            driver.FindElement(By.CssSelector("select[name='group'] option[value='" + groupId + "']")).Click();
         }
 
         private void CommitRemovalContactFromGroup()
